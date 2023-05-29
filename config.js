@@ -7,9 +7,20 @@ exports.config = {
 
     specs: [
         [
-            "C:/Qmate Project/specs/01_createNewPo.spec.js"
+            "C:/Qmate Project/specs/01_createNewPo.spec.js",
+            "C:/Qmate Project/specs/02_checkPoListReport.js"
         ],
     ],
+
+    params: {
+        import: {
+            data: "./data/",
+            purchaseOrder: "C:/Qmate Project/data/references.json"
+        },
+        export: {
+            purchaseOrder: "C:/Qmate Project/data/references.json"
+        }
+    },
 
     maxInstances: 3,
 

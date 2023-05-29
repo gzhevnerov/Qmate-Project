@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "@sap_oss/wdio-qmate-service": "^2.3.1"
+    "@sap_oss/wdio-qmate-service": "^2.3.1",
+    "dotenv": "^16.0.3"
   },
   "devDependencies": {
     "@wdio/cli": "^8.10.5",
