@@ -1,8 +1,8 @@
 require ('dotenv').config();
-var standardZPO = require('C:/QmateProject/data/standardZPO.json');
-var elementsData = require('C:/QmateProject/data/elementsData.json');
-var objectPage = require('C:/QmateProject/module/objectPage.js');
-var listReport = require('C:/QmateProject/module/listReport.js');
+var standardZPO = require("../data/standardZPO.json");
+var elementsData = require("../data/elementsData.json");
+var objectPage = require("../module/objectPage.js");
+var listReport = require("../module/listReport.js");
 
 describe("Create new Purchase Order", function() {
     
@@ -26,6 +26,7 @@ describe("Create new Purchase Order", function() {
     });
 
     it ("Step 04: Select Purchase Order type - Standard Z-PO (ZNB)", async function() {
+        
         await objectPage.fillInFields (
             elementsData.combobox.purchaseOrderType.type,
             elementsData.combobox.purchaseOrderType.metadata,

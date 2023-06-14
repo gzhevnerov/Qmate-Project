@@ -51,9 +51,10 @@
         "purchaseOrderType": {
             "type": "Combobox",
             "metadata": "sap.m.ComboBox",
-            "id": "GeneralInformationFacet1::PurchaseOrderType::Field-comboBoxEdit"
+            "id": "PurchaseOrderType"
         }
     },
+
     "button": {
         "createListReport": {
             "metadata": "sap.m.Button",
