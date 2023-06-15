@@ -1,14 +1,9 @@
 {
-    "section": {
-        "generalInformation": "General Information",
-        "items": "ItemsFacet"
-    },
-
     "field": {
         "supplier": {
             "type": "ID",
             "metadata": "sap.m.Input",
-            "id": "Supplier"
+            "id": "GeneralInformationFacet1::Supplier::Field-input"
         },
         "currency": {
             "type": "ID",
@@ -18,17 +13,17 @@
         "purchasingGroup": {
             "type": "ID",
             "metadata": "sap.m.Input",
-            "id": "PurchasingGroup"
+            "id": "GeneralInformationFacet2::PurchasingGroup::Field-input"
         },
         "purchasingOrganization": {
             "type": "ID",
             "metadata": "sap.m.Input",
-            "id": "PurchasingOrganization"
+            "id": "GeneralInformationFacet2::PurchasingOrganization::Field-input"
         },
         "companyCode": {
             "type": "ID",
             "metadata": "sap.m.Input",
-            "id": "CompanyCode"
+            "id": "GeneralInformationFacet2::CompanyCode::Field-input"
         },
         "itemCategory": {
             "type": "Item",
@@ -44,6 +39,13 @@
             "type": "Item",
             "metadata": "sap.m.Input",
             "path": "OrderQuantity"
+        },
+        "devileryDate": {
+            "metadata": "sap.m.DatePicker"
+        },
+        "purchaseOrderLR": {
+            "metadata": "sap.ui.comp.smartfilterbar.SFBMultiInput",
+            "id": "listReportFilter-filterItemControl_BASIC-PurchaseOrder"
         }
     },
 
@@ -51,7 +53,7 @@
         "purchaseOrderType": {
             "type": "Combobox",
             "metadata": "sap.m.ComboBox",
-            "id": "PurchaseOrderType"
+            "id": "GeneralInformationFacet1::PurchaseOrderType::Field-comboBoxEdit"
         }
     },
 
@@ -60,6 +62,13 @@
             "metadata": "sap.m.Button",
             "id": "*addEntry"
         },
+        "goListReport": {
+            "metadata": "sap.m.Button",
+            "id": "*listReportFilter-btnGo"
+        },
+        "selectItemListReport": {
+            "metadata": "sap.m.ColumnListItem"
+        },
         "createNewItem": {
             "metadata": "sap.m.Button",
             "id": "ItemsFacet::addEntry"
@@ -67,6 +76,22 @@
         "createObjectPage": {
             "metadata": "sap.m.Button",
             "id": "activate"
+        },
+        "generalInformation": {
+            "metadata": "sap.m.Button",
+            "id": "GeneralInformationCollectionFacet"
+        },
+        "items": {
+            "metadata": "sap.m.Button",
+            "id": "objectPage-anchBar-ui.ssuite.s2p.mm.pur.po.manage.st.s1::sap.suite.ui.generic.template.ObjectPage.view.Details::C_PurchaseOrderTP--ItemsFacet::Section-anchor"
+        },
+        "navigateToItem": {
+            "metadata": "sap.ui.comp.smartfield.SmartField",
+            "path": "PurchaseOrderItemStatus"
+        },
+        "applyItem": {
+            "metadata": "sap.m.Button",
+            "id": "footerObjectPageBackTo"
         }
     }
 }

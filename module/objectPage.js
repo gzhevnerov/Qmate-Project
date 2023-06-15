@@ -1,3 +1,5 @@
+const { path } = require("chromedriver");
+
 var objectPage = function() {
     const viewName = "sap.suite.ui.generic.template.ObjectPage.view.Details";
 
@@ -10,8 +12,7 @@ var objectPage = function() {
                     "id": `*${id}*`
                 }
             };
-            await ui5.userInterection.clearAndFill(selector, value, index);
-
+            await ui5.userInteraction.clearAndFill(selector, value);
         } else if (type === "Combobox") {
             const selector = {
                 "elementProperties": {
@@ -20,7 +21,7 @@ var objectPage = function() {
                     "id": `*${id}*`
                 }
             };
-            await ui5.userInterection.selectComboBox(selector, value);
+            await ui5.userInteraction.selectComboBox(selector, value, index);
         } else if (type === "Item") {
             const selector = {
                 "elementProperties": {
@@ -28,13 +29,14 @@ var objectPage = function() {
                     "metadata": `${metadata}`,
                     "bindingContextPath": `/C_PurchaseOrderItemTP*PurchaseOrder=''*PurchaseOrderItem='${index}'*`,
                     "value": [{
-                        "path": `*${id}*`
+                        "path": `${id}`
                     }]
                 }
             };
+            await ui5.userInteraction.clearAndFill(selector, value);
         }
     }
-        this.addItem = async function(type, metadata, id) {
+        this.addItem = async function(metadata, id) {
             const selector = {
                 "elementProperties": {
                     "viewName": viewName,
@@ -45,7 +47,30 @@ var objectPage = function() {
             await ui5.userInteraction.click(selector);
         };
 
-        this.navigateTo = async function(type, metadata, id) {
+        this.navigateTo = async function(metadata, id) {
+            const selector = {
+                "elementProperties": {
+                    "viewName": viewName,
+                    "metadata": `${metadata}`,
+                    "id": `*${id}*`
+                }
+            };
+            await ui5.userInteraction.click(selector);
+        };
+        this.navigateToItem = async function(metadata, id, index) {
+            const selector = {
+                "elementProperties": {
+                    "viewName": viewName,
+                    "metadata": `${metadata}`,
+                    "bindingContextPath": `/C_PurchaseOrderItemTP*PurchaseOrder=''*PurchaseOrderItem='${index}'*`,
+                    "value": [{
+                        "path": `${id}`
+                    }]
+                }
+            };
+            await ui5.userInteraction.click(selector);
+        };
+        this.saveObjectPage = async function(metadata, id) {
             const selector = {
                 "elementProperties": {
                     "viewName": viewName,

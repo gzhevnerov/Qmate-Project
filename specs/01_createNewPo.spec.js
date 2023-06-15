@@ -1,28 +1,32 @@
 require ('dotenv').config();
+
 var standardZPO = require("../data/standardZPO.json");
 var elementsData = require("../data/elementsData.json");
 var objectPage = require("../module/objectPage.js");
 var listReport = require("../module/listReport.js");
+const itemObjectPage = require('../module/itemObjectPage');
 
 describe("Create new Purchase Order", function() {
     
     it ("Step 01: Open system and navigate to the Manage Purchase Order application", async function() {
         await ui5.navigation.navigateToApplication ("PurchaseOrder-manage")
+        await util.browser.sleep (5000);
     });
 
     it ("Step 02: Log in to the system", async function() {
 
         await ui5.session.login(process.env.USER, process.env.PASSWORD);
-        await util.browser.sleep (10000);
+        await util.browser.sleep (5000);
 
     });
 
     it ("Step 03: Click Create button", async function() {
-        await listReport.clickCreateFromLR (
+        await util.browser.sleep (5000);
+        await listReport.clickLR (
             elementsData.button.createListReport.metadata,
             elementsData.button.createListReport.id
         );
-        await util.browser.sleep (10000);
+        await util.browser.sleep (5000);
     });
 
     it ("Step 04: Select Purchase Order type - Standard Z-PO (ZNB)", async function() {
@@ -33,22 +37,16 @@ describe("Create new Purchase Order", function() {
             elementsData.combobox.purchaseOrderType.id,
             standardZPO.generalInformationTab.purchaseOrderType
         );
-        await util.browser.sleep (5000);
-
     });
-
+    
     it ("Step 05: Fill in Supplier field - 50000040", async function() {
+
         await objectPage.fillInFields (
             elementsData.field.supplier.type,
             elementsData.field.supplier.metadata,
             elementsData.field.supplier.id,
             standardZPO.generalInformationTab.supplier
         );
-        console.log (elementsData.button.supplier.metadata);
-        console.log (elementsData.button.supplier.type);
-        console.log (elementsData.button.supplier.id);
-        await common.userInteraction.pressEnter();
-        await util.browser.sleep (5000);
     });
 
     it ("Step 06: Fill in Currency field - EUR", async function() {
@@ -76,10 +74,10 @@ describe("Create new Purchase Order", function() {
     
     it ("Step 08: Fill in Purchasing Organization field - 1010", async function() {
         await objectPage.fillInFields (
-            elementsData.field.purchasingOrg.type,
-            elementsData.field.purchasingOrg.metadata,
-            elementsData.field.purchasingOrg.id,
-            standardZPO.generalInformationTab.purchasingOrg
+            elementsData.field.purchasingOrganization.type,
+            elementsData.field.purchasingOrganization.metadata,
+            elementsData.field.purchasingOrganization.id,
+            standardZPO.generalInformationTab.purchasingOrganization
         );
         await common.userInteraction.pressEnter();
         await util.browser.sleep (5000);
@@ -98,85 +96,95 @@ describe("Create new Purchase Order", function() {
 
     it ("Step 10: Navigate to Items section", async function() {
         await objectPage.navigateTo (
-            elementsData.section.items
+            elementsData.button.items.metadata,
+            elementsData.button.items.id
         );
+        await util.browser.sleep (10000);
     });
     
-//     var itemArr = standardZPO.items
-//     for (let [itemIndex, itemValue] of itemArr.Entries()) {
-//         it ("Item" + itemValue.item + "Add Purchase Order Item", async function () {
-//             await objectPage.addItem (
-//                 elementsData.button.createNewItem.metadata,
-//                 elementsData.button.createNewItem.id
-//             );
-//         });
-//     }       
-//     it ("Item" + itemValue.item + "Select Item Category - " + itemValue.itemCategory, async function () {
-//         await objectPage.fillInFields(
-//             elementsData.field.itemCategory.type,
-//             elementsData.field.itemCategory.metadata,
-//             elementsData.field.itemCategory.path,
-//             itemValue.itemCategory,
-//             itemValue.item
-//         );
-//     });  
+    var itemArr = standardZPO.itemsTab
+    for (let [itemIndex, itemValue] of itemArr.entries()) {
+        it ("Item " + itemValue.item + " Add Purchase Order Item", async function () {
+            await objectPage.addItem (
+                elementsData.button.createNewItem.metadata,
+                elementsData.button.createNewItem.id
+            );
+        });      
+    it ("Item " + itemValue.item + " Select Item Category - " + itemValue.itemCategory, async function () {
+        await objectPage.fillInFields(
+            elementsData.field.itemCategory.type,
+            elementsData.field.itemCategory.metadata,
+            elementsData.field.itemCategory.path,
+            itemValue.itemCategory,
+            itemValue.item
+        );
+    });  
     
-//     it ("Item" + itemValue.item + "Fill in material - " + itemValue.material, async function () {
-//         await objectPage.fillInFields (
-//             elementsData.field.itemCategory.type,
-//             elementsData.field.itemCategory.metadata,
-//             elementsData.field.itemCategory.path,
-//             itemValue.itemCategory,
-//             itemValue.item
-//         );        
-//     }); 
+    it ("Item " + itemValue.item + " Fill in material - " + itemValue.material, async function () {
+        await objectPage.fillInFields (
+            elementsData.field.itemMaterial.type,
+            elementsData.field.itemMaterial.metadata,
+            elementsData.field.itemMaterial.path,
+            itemValue.material,
+            itemValue.item
+        );        
+    }); 
 
-//     it ("Item" + itemValue.item + "Fill in quantity - " + itemValue.orderQuantity, async function () {
-//         await objectPage.fillInFields (
-//             elementsData.field.itemQuantity.type,
-//             elementsData.field.itemQuantity.metadata,
-//             elementsData.field.itemQuantity.path,
-//             itemValue.itemQuantity,
-//             itemValue.item
-//         );        
-//     }); 
+    it ("Item " + itemValue.item + " Fill in quantity - " + itemValue.orderQuantity, async function () {
+        await objectPage.fillInFields (
+            elementsData.field.itemQuantity.type,
+            elementsData.field.itemQuantity.metadata,
+            elementsData.field.itemQuantity.path,
+            itemValue.quantity,
+            itemValue.item
+        );        
+    });
+    it ("Item " + itemValue.item + " Navigate to item", async function () {
+        await objectPage.navigateToItem (
+            elementsData.button.navigateToItem.metadata,
+            elementsData.button.navigateToItem.path,
+            itemValue.item 
+        );
+    });
+    it ("Item " + itemValue.item + " Click Apply", async function () {
+        await itemObjectPage.apply (
+            elementsData.button.applyItem.metadata,
+            elementsData.button.applyItem.id
+        );
+    });
+}
+    it ("Step 17: Click Save button", async function() {
+        await util.browser.sleep (5000);
+        await objectPage.saveObjectPage (
+            elementsData.button.createObjectPage.metadata,
+            elementsData.button.createObjectPage.id
+        );
+        await util.browser.sleep (5000);
+    });
 
-//     it ("Step 16: Save Purchase Order - Click Create ", async function() {
-//         const selector = {
-//             "elementProperties": {
-//                 "viewName": "sap.suite.ui.generic.template.ObjectPage.view.Details",
-//                 "metadata": "sap.m.Button",
-//                 "id": "*activate"
-//             }
-//         };
-//         await ui5.userInteraction.click(selector);
-//         await util.browser.sleep (5000);
-//     });
+    it ("Step 17: Export Purchase Order Id from document header", async function() {
+        const selector = {
+            "elementProperties": {
+                "viewName": "sap.suite.ui.generic.template.ObjectPage.view.Details",
+                "metadata": "sap.m.Title",
+                "id": "*template::ObjectPage::ObjectPageDynamicHeaderTitle"
+            }
+        };
+        const purchaseOrderId = await ui5.element.getPropertyValue(selector, "text");
+        util.console.log (purchaseOrderId);
+        const userData = {
+            "purchaseOrderNumber": purchaseOrderId
+        };
 
-//     it ("Step 17: Export Purchase Order Id from document header", async function() {
-//         const selector = {
-//             "elementProperties": {
-//                 "viewName": "sap.suite.ui.generic.template.ObjectPage.view.Details",
-//                 "metadata": "sap.m.Title",
-//                 "id": "*template::ObjectPage::ObjectPageDynamicHeaderTitle"
-//             }
-//         };
-//         const purchaseOrderId = await ui5.element.getPropertyValue(selector, "text");
-//         util.console.log (purchaseOrderId);
-//         const userData = {
-//             "purchaseOrderId": purchaseOrderId
-//         };
+        browser.config.params.export.purchaseOrder = userData;
 
-//         browser.config.params.export.purchaseOrder = userData;
+        const references = browser.config.params.import.data["references"];
+        references.purchaseOrderNumber = purchaseOrderId;
+        await util.browser.sleep (5000);
+    });
 
-//         const references = browser.config.params.import.data["references"];
-//         references.purchaseOrderNumber = purchaseOrderId;
-//         await util.browser.sleep (5000);
-//     });
-
-//     it ("Step 18: Log out", async function() {
-//         await ui5.session.logout();
-//         await util.browser.sleep (5000);
-//     });    
-// });
+    it ("Step 18: Log out", async function() {
+        await ui5.session.logout();
+        await util.browser.sleep (5000);
+    });    
 });

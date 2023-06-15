@@ -3,9 +3,10 @@
         "purchaseOrderType": "Standard Z-PO (ZNB)",
         "supplier": "50000040",
         "currency": "EUR",
-        "purchasingOrg": "1010",
+        "purchasingOrganization": "1010",
         "purchasingGroup": "001",
-        "companyCode": "1010"
+        "companyCode": "1010",
+        "deliveryDate": "17.06.2023"
     },
 
     "itemsTab": [
@@ -13,15 +14,13 @@
             "item": "00010",
             "itemCategory": "Standard",
             "material": "WM-D03",
-            "quantity": "10",
-            "plant": "1010"
+            "quantity": "10"
         },
         {
             "item": "00020",
             "itemCategory": "Standard",
             "material": "WM-D03",
-            "quantity": "10",
-            "plant": "1010"
+            "quantity": "10"
         }
     ]
 }
